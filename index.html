@@ -9,18 +9,42 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="obscure" id="obscure"></div>
+    <div class="playermod" id="playmod">
+        <h2 class="formtitle">Who is going to to play?</h2>
+        <form>
+            <div class="formdiv">
+                <label class="playername" for="player1name">Player 1:</label>
+                <input type="text" id="player1name" maxlength="10" required>
+                <label class="playername" for="player2name">Player 2:</label>
+                <input type="text" id="player2name" maxlength="10" required>
+                <button type="submit" id="formsub">Start the game!</button>
+            </div>
+        </form>
+    </div>
+    <form>
+    </form>
     <div class="title">Tic Tac Toe</div>
     <div class="main">
+        <div class="playerslist">
+            <div class="plsymbol" id="symbol1">X</div>
+            <div class="playerlist1" id="playertit1">Player 1:</div>
+            <div class="playerlist1" id="playernam1"></div>
+            <div class="plsymbol" id="symbol2">O</div>
+            <div class="playerlist1" id="playertit2">Player 2:</div>
+            <div class="playerlist2" id="playernam2"></div>
+        </div>
+        <div class="playerturn" id="playerturn">It is</div>
         <div class="board">
-            <div class="tile" id="A1">X</div>
-            <div class="tile" id="B1">X</div>
-            <div class="tile" id="C1">X</div>
-            <div class="tile" id="A2">X</div>
-            <div class="tile" id="B2">O</div>
-            <div class="tile" id="C2">O</div>
-            <div class="tile" id="A3">O</div>
+            <div class="tile" id="A1"></div>
+            <div class="tile" id="B1"></div>
+            <div class="tile" id="C1"></div>
+            <div class="tile" id="A2"></div>
+            <div class="tile" id="B2"></div>
+            <div class="tile" id="C2"></div>
+            <div class="tile" id="A3"></div>
             <div class="tile" id="B3"></div>
-            <div class="tile" id="C3">X</div>
+            <div class="tile" id="C3"></div>
         </div>
     </div>
 </body>
