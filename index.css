@@ -44,6 +44,11 @@ table {
 	border-spacing: 0;
 }
 
+/*my animations */
+@keyframes idle {100%{};}
+@keyframes  increase {50% {font-size: 80px;}}
+
+
 body{
     height:100%;
     width:100%;

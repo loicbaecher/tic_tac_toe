@@ -1,5 +1,4 @@
 //Player name change module
-
 const initname = (()=>{
     var obscure = document.getElementById("obscure");
     var playermod = document.getElementById("playmod");
@@ -46,6 +45,7 @@ const Gameboard = (()=>{
     var playturn = document.getElementById("playerturn");
     playturn.textContent = `It is ${currentplayer.name}'s turn.`;
 
+    //function to get the State of the board
     var getstate = function(){
         State[0] = document.getElementById("A1").textContent;
         State[1] = document.getElementById("B1").textContent;
@@ -58,6 +58,7 @@ const Gameboard = (()=>{
         State[8] = document.getElementById("C3").textContent;
     }
 
+    //function to check if a tile is empty
     var checkempty = function(tileid){
         switch(tileid){
             case "A1": if(State[0] == ""){return("TRUE")} else{return("FALSE")}
@@ -72,6 +73,7 @@ const Gameboard = (()=>{
         }
     }
 
+    //function to update the State array
     var updatestate = function(tileid,symbol){
         switch(tileid){
             case "A1": State[0] = symbol; break;
@@ -85,41 +87,38 @@ const Gameboard = (()=>{
             case "C3": State[8] = symbol; break;
         }
     }
-
-    var checkfinished = function(){
-        if(
-        (State[0]==State[1]==State[2]==(Player1.symbol))|
-        (State[3]==State[4]==State[5]==(Player1.symbol))|
-        (State[6]==State[7]==State[8]==(Player1.symbol))|
-        (State[0]==State[3]==State[6]==(Player1.symbol))|
-        (State[1]==State[4]==State[7]==(Player1.symbol))|
-        (State[2]==State[5]==State[8]==(Player1.symbol))|
-        (State[0]==State[4]==State[8]==(Player1.symbol))|
-        (State[2]==State[4]==State[6]==(Player1.symbol))
-        )
-        {
-            playturn.textContent = `${Player1.name} won!`
-            return("TRUE");    
+    //function to check if a winning condition appeared
+    var wincheck = function(state){
+        const winningCombi = [
+            [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
+        ]
+        var winningplayer = "";
+        for (let i=0; i<winningCombi.length;i++){
+            if(state[winningCombi[i][0]]===state[winningCombi[i][1]] && state[winningCombi[i][1]]===state[winningCombi[i][2]] && state[winningCombi[i][2]]!==""){
+                switch(State[winningCombi[i][0]]){
+                    case "X" : winningplayer = Gameboard.Player1.name; break;
+                    case "O" : winningplayer = Gameboard.Player2.name; break;
+                }
+                var winningcase = winningCombi[i];
+                var winq = "WIN";
+                break;
+            }
+            else if(!state.includes("")){
+                var winq = "DRAW";
+                var winningplayer = "None";
+                var winningcase = "None";
+            }
+            else{
+                winningplayer = "None";
+                winningcase = "None";
+                winq = "FALSE";
+            }
         }
-        else if(
-            (State[0]==State[1]==State[2]==(Player2.symbol))|
-            (State[3]==State[4]==State[5]==(Player2.symbol))|
-            (State[6]==State[7]==State[8]==(Player2.symbol))|
-            (State[0]==State[3]==State[6]==(Player2.symbol))|
-            (State[1]==State[4]==State[7]==(Player2.symbol))|
-            (State[2]==State[5]==State[8]==(Player2.symbol))|        
-            (State[0]==State[4]==State[8]==(Player2.symbol))|
-            (State[2]==State[4]==State[6]==(Player2.symbol))
-        )
-        {
-            playturn.textContent = `${Player2.name} won!`;
-            return("TRUE");
-        }
-        else{
-            return("FALSE");
-        }
+        var winning = [winq,winningplayer,winningcase];
+        return(winning)
     }
 
+    //function to change the player turn message
     var changeplayerturn = function(currentplayer){
         var playturn = document.getElementById("playerturn");
         playturn.textContent = `It is ${currentplayer.name}'s turn.`;
@@ -127,15 +126,17 @@ const Gameboard = (()=>{
 
     tiles.forEach(function(tile){
         tile.addEventListener('click',()=>{
-            Gameflow.mark(currentplayer,event.target.id);
+            Gameflow.mark(currentplayer,event.target.id)
         })
     })
 
-    return{currentplayer,updatestate,getstate,State,Player1,Player2,checkempty,changeplayerturn,checkfinished}
+    return{currentplayer,updatestate,getstate,State,Player1,Player2,
+        checkempty,changeplayerturn,wincheck}
 })()
 
 //Gameflow module
 const Gameflow = (()=>{
+    var gameover = "FALSE";
     var changeplayer = function(player){
         if(player == Gameboard.Player1){
             Gameboard.currentplayer = Gameboard.Player2;
@@ -145,18 +146,90 @@ const Gameflow = (()=>{
         }
     }
 
+    //Gameover function
+    var overgame = function(wincom){
+        wincom.forEach((val) => {
+            switch(val){
+                case 0: {
+                    var inc = document.getElementById("A1");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                }
+                case 1:  {
+                    var inc = document.getElementById("B1");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                }
+                case 2:{
+                    var inc = document.getElementById("C1");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                }
+                case 3:{
+                    var inc = document.getElementById("A2");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                }
+                case 4:{
+                    var inc = document.getElementById("B2");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                }
+                case 5:{
+                    var inc = document.getElementById("C2");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                }
+                case 6:{
+                    var inc = document.getElementById("A3");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                }
+                case 7:{
+                    var inc = document.getElementById("B3");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                }
+                case 8:{
+                    var inc = document.getElementById("C3");
+                    inc.style.animation = "increase 2s infinite";
+                    break;
+                } 
+            }
+        });
+    }
+
+    //function to add a mark to the board
     var mark = function(currentplayer,tileid){
-        currentplayer = Gameboard.currentplayer;
-        var tiletomark = document.getElementById(tileid);
-        if(Gameboard.checkempty(tileid)== "TRUE"){
-        tiletomark.textContent = currentplayer.symbol;
-        Gameboard.getstate();
-        Gameboard.updatestate(tileid,currentplayer.symbol);
-        Gameflow.changeplayer(currentplayer);
-        Gameboard.changeplayerturn(Gameboard.currentplayer);
-        Gameboard.checkfinished();
+            if(gameover !== "TRUE"){
+            currentplayer = Gameboard.currentplayer;
+            var tiletomark = document.getElementById(tileid);
+            if(Gameboard.checkempty(tileid)== "TRUE"){
+                if(currentplayer == Gameboard.Player1){
+                    tiletomark.style.color = "#FEA1A1";
+                }
+                else{tiletomark.style.color= "#827ae7"}
+                tiletomark.textContent = currentplayer.symbol;
+                Gameboard.getstate();
+                Gameboard.updatestate(tileid,currentplayer.symbol);
+                Gameflow.changeplayer(currentplayer);
+                Gameboard.changeplayerturn(Gameboard.currentplayer);
+
+                if(Gameboard.wincheck(Gameboard.State)[0]=="WIN"){
+                    var playturn = document.getElementById("playerturn");
+                    playturn.textCont
+                    ent = `${Gameboard.wincheck(Gameboard.State)[1]} won!`;
+                    gameover = "TRUE";
+                    overgame(Gameboard.wincheck(Gameboard.State)[2]);
+                }
+                else if(Gameboard.wincheck(Gameboard.State)[0]=="DRAW"){
+                    var playturn = document.getElementById("playerturn");
+                    playturn.textContent = `It's a draw!`;
+                    gameover = "TRUE";
+                }
+            }
         }
     }
 
-    return{changeplayer,mark};
+    return{changeplayer,mark,gameover,overgame};
 })()
