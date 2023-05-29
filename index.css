@@ -58,8 +58,9 @@ body{
 .title{
     display:flex;
     justify-content: center;
-    margin: 50px;
+    margin: 30px;
     font-family: 'Roboto Slab', serif;
+    font-size: 60px;
 }
 
 div.main{
@@ -95,6 +96,7 @@ div.playerturn{
     align-items: center;
     justify-content: center;
     font-size: 25px;
+    font-family: 'Roboto Slab', serif;
 }
 
 div.tile{
@@ -113,6 +115,16 @@ div.tile{
 .tile:hover{
  background-color: #ECCDB4;
  cursor:pointer;
+}
+
+button{
+    background-color: #F0EDD4;
+    border-radius: 5px;
+}
+
+button:hover{
+    background-color: #ccc9b2;
+    cursor:pointer;
 }
 
 div.board{
@@ -190,4 +202,14 @@ button.formsub{
     font-size: 2vh;
     font-family: 'Roboto Slab', serif;
     border-radius: 5px;
+}
+
+div.restart{
+    display:flex;
+    justify-content: center;
+    margin:20px;
+}
+
+button.restart{
+    font-size: 20px;
 }

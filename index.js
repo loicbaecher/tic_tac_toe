@@ -1,3 +1,9 @@
+//Restart buttton
+let restart = document.getElementById("restart");
+restart.addEventListener('click',()=>{
+    Gameflow.restart()
+})
+
 //Player name change module
 const initname = (()=>{
     var obscure = document.getElementById("obscure");
@@ -217,8 +223,7 @@ const Gameflow = (()=>{
 
                 if(Gameboard.wincheck(Gameboard.State)[0]=="WIN"){
                     var playturn = document.getElementById("playerturn");
-                    playturn.textCont
-                    ent = `${Gameboard.wincheck(Gameboard.State)[1]} won!`;
+                    playturn.textContent = `${Gameboard.wincheck(Gameboard.State)[1]} won!`;
                     gameover = "TRUE";
                     overgame(Gameboard.wincheck(Gameboard.State)[2]);
                 }
@@ -231,5 +236,17 @@ const Gameflow = (()=>{
         }
     }
 
-    return{changeplayer,mark,gameover,overgame};
+    var restart = function(){
+        gameover = "FALSE";
+        var tiles = document.querySelectorAll(".tile");
+        tiles.forEach(function(tile){
+            tile.textContent = "";
+            tile.style.animation = "idle";
+        })
+        Gameboard.getstate();
+        Gameboard.currentplayer = Gameboard.Player1;
+        Gameboard.changeplayerturn(Gameboard.currentplayer)
+    }
+
+    return{changeplayer,mark,gameover,overgame,restart};
 })()
